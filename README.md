@@ -8,7 +8,7 @@ Add it to your build.gradle with:
 
 ```gradle
 dependencies {
-    implementation 'by.shostko.android:SimpleAdapter:{latest version}'
+    implementation 'by.shostko.android:SimpleAdapter:0.4'
 }
 ```
 
