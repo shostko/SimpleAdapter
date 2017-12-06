@@ -94,7 +94,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         }
     }
 
-    private void updateInternal(@NonNull List<T> items, @NonNull P param)
+    private <TE extends T> void updateInternal(@NonNull List<TE> items, @NonNull P param)
     {
         synchronized (this)
         {
@@ -112,7 +112,8 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
                 }
                 else
                 {
-                    pendingItems = new ArrayList<>(items);
+                    //noinspection unchecked
+                    pendingItems = (List<T>) new ArrayList<>(items);
                 }
                 pending = Pair.create(pendingItems, param);
             }
@@ -123,9 +124,10 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         }
     }
 
-    private void startWork(@NonNull List<T> items, @NonNull P param)
+    private <TE extends T> void startWork(@NonNull List<TE> items, @NonNull P param)
     {
-        working = Pair.<List<T>, P>create(new ArrayList<>(items), param);
+        //noinspection unchecked
+        working = Pair.create((List<T>) new ArrayList<>(items), param);
         pending = null;
         startFilter(lastFilter);
     }
@@ -135,7 +137,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         getFilter().filter(convertConstraint(filter));
     }
 
-    private void updateInternal(@NonNull List<T> items)
+    private <TE extends T> void updateInternal(@NonNull List<TE> items)
     {
         updateInternal(items, getLastParam());
     }
@@ -145,7 +147,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         updateInternal(getLastItems(), param);
     }
 
-    public void changeItemsAndParam(@NonNull List<T> items, @NonNull P param)
+    public <TE extends T> void changeItemsAndParam(@NonNull List<TE> items, @NonNull P param)
     {
         updateInternal(items, param);
     }
@@ -155,12 +157,12 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         updateInternal(param);
     }
 
-    public void changeItems(@NonNull List<T> items)
+    public <TE extends T> void changeItems(@NonNull List<TE> items)
     {
         updateInternal(items);
     }
 
-    public void changeItem(int position, @NonNull T item)
+    public <TE extends T> void changeItem(int position, @NonNull TE item)
     {
         if (position >= 0)
         {
@@ -178,7 +180,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         }
     }
 
-    public void addItems(@NonNull List<T> items)
+    public <TE extends T> void addItems(@NonNull List<TE> items)
     {
         boolean smthAdded = false;
         List<T> newItems = new ArrayList<>(getLastItems());
@@ -196,7 +198,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         }
     }
 
-    public void addItem(@NonNull T item)
+    public <TE extends T> void addItem(@NonNull TE item)
     {
         List<T> newItems = new ArrayList<>(getLastItems());
         if (!newItems.contains(item))
@@ -206,7 +208,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         }
     }
 
-    public void removeItems(@NonNull List<T> items)
+    public <TE extends T> void removeItems(@NonNull List<TE> items)
     {
         boolean smthRemoved = false;
         List<T> newItems = new ArrayList<>(getLastItems());
@@ -225,7 +227,7 @@ abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T, P, F>
         }
     }
 
-    public void removeItem(@NonNull T item)
+    public <TE extends T> void removeItem(@NonNull TE item)
     {
         List<T> newItems = new ArrayList<>(getLastItems());
         int index = newItems.indexOf(item);
