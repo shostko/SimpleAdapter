@@ -4,12 +4,13 @@ import android.support.annotation.NonNull;
 
 public interface DiffCallbackHelper<T>
 {
-    boolean areItemsOfSameType(int oldItemPosition,
-                               int newItemPosition);
+    int getItemViewType(@NonNull T item);
 
-    boolean areItemsTheSame(int oldPosition, @NonNull T oldItem,
+    boolean areItemsTheSame(int viewType,
+                            int oldPosition, @NonNull T oldItem,
                             int newPosition, @NonNull T newItem);
 
-    boolean areContentsTheSame(int oldPosition, @NonNull T oldItem,
+    boolean areContentsTheSame(int viewType,
+                               int oldPosition, @NonNull T oldItem,
                                int newPosition, @NonNull T newItem);
 }

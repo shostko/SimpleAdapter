@@ -40,14 +40,8 @@ public abstract class SimpleParametrizedFilterableAdapter<VH extends RecyclerVie
     }
 
     @Override
-    public boolean areItemsOfSameType(int oldItemPosition, @NonNull P oldParam,
-                                      int newItemPosition, @NonNull P newParam)
-    {
-        return getItemViewType(oldItemPosition) == getItemViewType(newItemPosition);
-    }
-
-    @Override
-    public boolean areContentsTheSame(int oldPosition, @NonNull T oldItem, @NonNull P oldParam,
+    public boolean areContentsTheSame(int viewType,
+                                      int oldPosition, @NonNull T oldItem, @NonNull P oldParam,
                                       int newPosition, @NonNull T newItem, @NonNull P newParam)
     {
         return oldItem.equals(newItem) && oldParam.equals(newParam);

@@ -41,13 +41,19 @@ public abstract class SimpleFilterableAdapter<VH extends RecyclerView.ViewHolder
     }
 
     @Override
-    public boolean areItemsOfSameType(int oldItemPosition, int newItemPosition)
-    {
-        return getItemViewType(oldItemPosition) == getItemViewType(newItemPosition);
+    public final int getItemViewType(@NonNull T item, Object param) {
+        return getItemViewType(item);
     }
 
     @Override
-    public boolean areContentsTheSame(int oldPosition, @NonNull T oldItem, int newPosition, @NonNull T newItem)
+    public int getItemViewType(@NonNull T item) {
+        return 0;
+    }
+
+    @Override
+    public boolean areContentsTheSame(int viewType,
+                                      int oldPosition, @NonNull T oldItem,
+                                      int newPosition, @NonNull T newItem)
     {
         return oldItem.equals(newItem);
     }
@@ -60,21 +66,21 @@ public abstract class SimpleFilterableAdapter<VH extends RecyclerView.ViewHolder
     }
 
     @Override
-    protected final void onBindViewHolder(VH holder, int position, @NonNull T item, @NonNull Object param)
+    protected final void onBindViewHolder(int viewType, VH holder, int position, @NonNull T item, @NonNull Object param)
     {
-        onBindViewHolder(holder, position, item);
+        onBindViewHolder(viewType, holder, position, item);
     }
 
-    protected abstract void onBindViewHolder(VH holder, int position, @NonNull T item);
+    protected abstract void onBindViewHolder(int viewType, VH holder, int position, @NonNull T item);
 
     @Override
-    protected final void onBindViewHolder(VH holder, int position, @NonNull T item, @NonNull Object param, List<Object> payloads)
+    protected final void onBindViewHolder(int viewType, VH holder, int position, @NonNull T item, @NonNull Object param, List<Object> payloads)
     {
-        onBindViewHolder(holder, position, item, payloads);
+        onBindViewHolder(viewType, holder, position, item, payloads);
     }
 
-    protected void onBindViewHolder(VH holder, int position, @NonNull T item, List<Object> payloads)
+    protected void onBindViewHolder(int viewType, VH holder, int position, @NonNull T item, List<Object> payloads)
     {
-        super.onBindViewHolder(holder, position, item, PARAM, payloads);
+        super.onBindViewHolder(viewType, holder, position, item, PARAM, payloads);
     }
 }

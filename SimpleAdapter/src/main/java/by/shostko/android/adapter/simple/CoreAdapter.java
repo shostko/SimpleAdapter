@@ -52,20 +52,32 @@ abstract class CoreAdapter<VH extends RecyclerView.ViewHolder, T, P>
     @Override
     public final void onBindViewHolder(VH holder, int position)
     {
-        onBindViewHolder(holder, position, getItem(position), param);
+        T item = getItem(position);
+        onBindViewHolder(getItemViewType(item, param), holder, position, item, param);
     }
 
-    protected abstract void onBindViewHolder(VH holder, int position, @NonNull T item, @NonNull P param);
+    protected abstract void onBindViewHolder(int viewType, VH holder, int position, @NonNull T item, @NonNull P param);
 
     @Override
     public final void onBindViewHolder(VH holder, int position, List<Object> payloads)
     {
-        onBindViewHolder(holder, position, getItem(position), param, payloads);
+        T item = getItem(position);
+        onBindViewHolder(getItemViewType(item, param), holder, position, item, param, payloads);
     }
 
-    protected void onBindViewHolder(VH holder, int position, @NonNull T item, @NonNull P param, List<Object> payloads)
+    protected void onBindViewHolder(int viewType, VH holder, int position, @NonNull T item, @NonNull P param, List<Object> payloads)
     {
         super.onBindViewHolder(holder, position, payloads);
+    }
+
+    @Override
+    public final int getItemViewType(int position) {
+        return getItemViewType(getItem(position), param);
+    }
+
+    @SuppressWarnings("unused")
+    public int getItemViewType(@NonNull T item, P param) {
+        return 0;
     }
 
     @NonNull
