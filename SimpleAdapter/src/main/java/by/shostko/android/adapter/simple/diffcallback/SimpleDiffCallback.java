@@ -19,23 +19,23 @@ public class SimpleDiffCallback<T> extends BaseDiffCallback<T, Object>
     }
 
     @Override
-    protected boolean areItemsOfSameType(int oldItemPosition, @NonNull Object oldParam,
-                                         int newItemPosition, @NonNull Object newParam)
-    {
-        return callbackHelper.areItemsOfSameType(oldItemPosition, newItemPosition);
+    protected int getItemViewType(@NonNull T item, @NonNull Object oldParam) {
+        return callbackHelper.getItemViewType(item);
     }
 
     @Override
-    protected boolean areItemsTheSame(int oldPosition, @NonNull T oldItem, @NonNull Object oldParam,
+    protected boolean areItemsTheSame(int viewType,
+                                      int oldPosition, @NonNull T oldItem, @NonNull Object oldParam,
                                       int newPosition, @NonNull T newItem, @NonNull Object newParam)
     {
-        return callbackHelper.areItemsTheSame(oldPosition, oldItem, newPosition, newItem);
+        return callbackHelper.areItemsTheSame(viewType, oldPosition, oldItem, newPosition, newItem);
     }
 
     @Override
-    protected boolean areContentsTheSame(int oldPosition, @NonNull T oldItem, @NonNull Object oldParam,
+    protected boolean areContentsTheSame(int viewType,
+                                         int oldPosition, @NonNull T oldItem, @NonNull Object oldParam,
                                          int newPosition, @NonNull T newItem, @NonNull Object newParam)
     {
-        return callbackHelper.areContentsTheSame(oldPosition, oldItem, newPosition, newItem);
+        return callbackHelper.areContentsTheSame(viewType, oldPosition, oldItem, newPosition, newItem);
     }
 }

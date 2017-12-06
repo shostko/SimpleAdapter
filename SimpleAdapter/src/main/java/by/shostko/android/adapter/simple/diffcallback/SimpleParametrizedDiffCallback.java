@@ -18,23 +18,23 @@ public class SimpleParametrizedDiffCallback<T, P> extends BaseDiffCallback<T, P>
     }
 
     @Override
-    protected boolean areItemsOfSameType(int oldItemPosition, @NonNull P oldParam,
-                                         int newItemPosition, @NonNull P newParam)
-    {
-        return callbackHelper.areItemsOfSameType(oldItemPosition, oldParam, newItemPosition, newParam);
+    protected int getItemViewType(@NonNull T item, @NonNull P oldParam) {
+        return callbackHelper.getItemViewType(item, oldParam);
     }
 
     @Override
-    protected boolean areItemsTheSame(int oldPosition, @NonNull T oldItem, @NonNull P oldParam,
+    protected boolean areItemsTheSame(int viewType,
+                                      int oldPosition, @NonNull T oldItem, @NonNull P oldParam,
                                       int newPosition, @NonNull T newItem, @NonNull P newParam)
     {
-        return callbackHelper.areItemsTheSame(oldPosition, oldItem, oldParam, newPosition, newItem, newParam);
+        return callbackHelper.areItemsTheSame(viewType, oldPosition, oldItem, oldParam, newPosition, newItem, newParam);
     }
 
     @Override
-    protected boolean areContentsTheSame(int oldPosition, @NonNull T oldItem, @NonNull P oldParam,
+    protected boolean areContentsTheSame(int viewType,
+                                         int oldPosition, @NonNull T oldItem, @NonNull P oldParam,
                                          int newPosition, @NonNull T newItem, @NonNull P newParam)
     {
-        return callbackHelper.areContentsTheSame(oldPosition, oldItem, oldParam, newPosition, newItem, newParam);
+        return callbackHelper.areContentsTheSame(viewType, oldPosition, oldItem, oldParam, newPosition, newItem, newParam);
     }
 }
