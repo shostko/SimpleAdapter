@@ -17,6 +17,7 @@ class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
     private var pendingData: Data<T, P>? = null
     private var working: Boolean = false
 
+    @Synchronized
     internal fun submitItems(data: Data<T, P>) {
         if (working) {
             pendingData = data
@@ -27,6 +28,7 @@ class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
         }
     }
 
+    @Synchronized
     internal fun publishResults(originalData: Data<T, P>, filteredData: Data<T, P>, diffResult: DiffUtil.DiffResult) {
         val pending = pendingData
         if (pending == null) {
