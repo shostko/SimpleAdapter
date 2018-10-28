@@ -15,13 +15,15 @@ class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
     private var constraint: F? = filterDelegate.initialConstraint()
     private var originalData: Data<T, P>? = null
     private var pendingData: Data<T, P>? = null
+    private var working: Boolean = false
 
     internal fun submitItems(data: Data<T, P>) {
-        if (pendingData == null) {
+        if (working) {
+            pendingData = data
+        } else {
+            working = true
             val filter = SimpleFilter(this, data, this.data, filterDelegate, diffDelegate)
             filter.filter(filterDelegate.convert(constraint))
-        } else {
-            pendingData = data
         }
     }
 
@@ -31,6 +33,7 @@ class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
             this.data.update(filteredData)
             this.originalData = originalData
             diffResult.dispatchUpdatesTo(this)
+            working = false
         } else {
             pendingData = null
             val filter = SimpleFilter(this, pending, this.data, filterDelegate, diffDelegate)
