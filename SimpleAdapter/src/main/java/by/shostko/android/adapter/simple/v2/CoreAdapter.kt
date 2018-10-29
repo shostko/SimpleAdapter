@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
 @Suppress("MemberVisibilityCanBePrivate", "UNUSED_PARAMETER", "unused")
-class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
-        private val holderDelegate: ViewHolderDelegate.Parametrized<VH, T, P>,
-        private val diffDelegate: DiffDelegate.Parametrized<T, P>,
-        private val filterDelegate: FilterDelegate.Parametrized<T, P, F>
-) : SimpleAdapter<VH, T, P, F>() {
+open class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F>() : SimpleAdapter<VH, T, P, F>() {
+
+    internal lateinit var holderDelegate: ViewHolderDelegate.Parametrized<VH, T, P>
+    internal lateinit var diffDelegate: DiffDelegate.Parametrized<T, P>
+    internal lateinit var filterDelegate: FilterDelegate.Parametrized<T, P, F>
 
     private val data: Data<T, P> = Data()
     private var constraint: F? = filterDelegate.initialConstraint()
@@ -17,8 +17,16 @@ class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
     private var pendingData: Data<T, P>? = null
     private var working: Boolean = false
 
+    constructor(holderDelegate: ViewHolderDelegate.Parametrized<VH, T, P>,
+                diffDelegate: DiffDelegate.Parametrized<T, P>,
+                filterDelegate: FilterDelegate.Parametrized<T, P, F>) : this() {
+        this.holderDelegate = holderDelegate
+        this.diffDelegate = diffDelegate
+        this.filterDelegate = filterDelegate
+    }
+
     @Synchronized
-    internal fun submitItems(data: Data<T, P>) {
+    private fun submitData(data: Data<T, P>) {
         if (working) {
             pendingData = data
         } else {
@@ -42,6 +50,12 @@ class CoreAdapter<VH : RecyclerView.ViewHolder, T, P, F> internal constructor(
             filter.filter(filterDelegate.convert(constraint))
         }
     }
+
+    override fun submit(items: List<T?>?) = submitData(Data(items, data.param))
+
+    override fun submit(param: P?) = submitData(Data(data.items, param))
+
+    override fun submit(items: List<T?>?, param: P?) = submitData(Data(items, param))
 
     fun getItem(position: Int): T? = data[position]
 
