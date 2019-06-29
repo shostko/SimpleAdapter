@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/shostko/SimpleAdapter'
     gitUrl = 'https://github.com/shostko/SimpleAdapter.git'
 
-    libraryVersion = '0.4'
+    libraryVersion = '0.5'
 
     developerId = 'shostko'
     developerName = 'Sergey Shostko'
@@ -30,8 +30,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 3
-        versionName "0.4"
+        versionCode 4
+        versionName "0.5"
     }
 
     buildTypes {
