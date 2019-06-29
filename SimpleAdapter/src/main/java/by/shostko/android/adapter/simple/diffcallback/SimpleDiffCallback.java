@@ -1,6 +1,6 @@
 package by.shostko.android.adapter.simple.diffcallback;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
