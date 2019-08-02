@@ -1,27 +1,14 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
-ext {
-    bintrayRepo = 'android'
-    bintrayName = 'SimpleAdapter'
-
-    publishedGroupId = 'by.shostko.android'
-    libraryName = 'SimpleAdapter'
-    artifact = 'SimpleAdapter'
-
-    libraryDescription = 'Simple way to create you adapter with DiffUtill integrated (background thread) and possibility to perform filtering and adding parameter to the list of items.'
-
-    siteUrl = 'https://github.com/shostko/SimpleAdapter'
-    gitUrl = 'https://github.com/shostko/SimpleAdapter.git'
-
-    libraryVersion = '0.5'
-
-    developerId = 'shostko'
-    developerName = 'Sergey Shostko'
-    developerEmail = 'sergey@shostko.by'
-
-    licenseName = 'The MIT License (MIT)'
-    licenseUrl = 'http://www.opensource.org/licenses/mit-license.php'
-    allLicenses = ["MIT"]
+publish {
+    userOrg = 'shostko'
+    repoName = 'android'
+    groupId = 'by.shostko.android'
+    artifactId = 'SimpleAdapter'
+    publishVersion = '0.5'
+    desc = 'Simple way to create you adapter with DiffUtill integrated (background thread) and possibility to perform filtering and adding parameter to the list of items.'
+    website = 'https://github.com/shostko/SimpleAdapter'
 }
 
 android {
@@ -50,9 +37,3 @@ dependencies {
     compileOnly 'androidx.annotation:annotation:1.1.0'
     compileOnly 'androidx.recyclerview:recyclerview:1.1.0-beta01'
 }
-
-// Add these lines to publish library to bintray.
-// This is the readymade scripts made by github user nuuneoi to make uploading to bintray easy.
-// Place it at the end of the file
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
