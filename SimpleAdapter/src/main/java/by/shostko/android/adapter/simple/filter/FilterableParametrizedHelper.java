@@ -1,6 +1,6 @@
 package by.shostko.android.adapter.simple.filter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public interface FilterableParametrizedHelper<T, P, F> extends BaseFilterableHelper<F>
 {
