@@ -39,11 +39,16 @@ android {
             minifyEnabled false
         }
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 dependencies {
     compileOnly 'androidx.annotation:annotation:1.1.0'
-    compileOnly 'androidx.recyclerview:recyclerview:1.1.0-alpha06'
+    compileOnly 'androidx.recyclerview:recyclerview:1.1.0-beta01'
 }
 
 // Add these lines to publish library to bintray.
